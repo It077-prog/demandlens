@@ -15,13 +15,18 @@ def main() -> None:
     results = {}
 
     baseline = seasonal_naive_predictions(df)
-    results["seasonal_naive"] = evaluate_frame(baseline[baseline["Year"] == 2024])
+    baseline_2024 = baseline[baseline["Year"] == 2024]
+    results["seasonal_naive_full_2024"] = evaluate_frame(baseline_2024)
 
     _, model_a = fit_predict_year(df, MODEL_A_FEATURES, test_year=2024)
-    results["model_a"] = evaluate_frame(model_a)
+    results["model_a_full_2024"] = evaluate_frame(model_a)
 
-    _, model_b = fit_predict_year(df, MODEL_A_FEATURES + AIRPORT_FEATURES, test_year=2024)
-    results["model_b"] = evaluate_frame(model_b)
+    _, model_b = fit_predict_year(
+        df,
+        MODEL_A_FEATURES + AIRPORT_FEATURES,
+        test_year=2024,
+    )
+    results["model_b_full_2024"] = evaluate_frame(model_b)
 
     visitor_df = df.dropna(subset=["Total_Overnight_Visitors"]).copy()
     if 2024 in set(visitor_df["Year"]):
@@ -30,7 +35,16 @@ def main() -> None:
             MODEL_A_FEATURES + AIRPORT_FEATURES + VISITOR_FEATURES,
             test_year=2024,
         )
-        results["model_c"] = evaluate_frame(model_c)
+        results["model_c_visitor_window_2024"] = evaluate_frame(model_c)
+
+        visitor_quarters = set(zip(model_c["Quarter_Number"], model_c["Hotel_Category"]))
+        matched = baseline_2024[
+            baseline_2024.apply(
+                lambda row: (row["Quarter_Number"], row["Hotel_Category"]) in visitor_quarters,
+                axis=1,
+            )
+        ]
+        results["seasonal_naive_matched_to_model_c"] = evaluate_frame(matched)
 
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(results, indent=2))
