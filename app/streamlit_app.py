@@ -1,8 +1,8 @@
 import streamlit as st
 
-st.set_page_config(page_title="DemandLens", page_icon="📈", layout="wide")
+st.set_page_config(page_title="StaySignal", page_icon="📈", layout="wide")
 
-st.title("DemandLens")
+st.title("StaySignal")
 st.subheader("Dubai Hospitality Demand Intelligence")
 
 st.info(
