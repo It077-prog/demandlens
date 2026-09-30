@@ -1,6 +1,6 @@
-# DemandLens
+# StaySignal — Dubai Hospitality Demand Intelligence
 
-DemandLens is a Dubai hospitality demand-intelligence portfolio project.
+StaySignal is a Dubai hospitality demand-intelligence portfolio project.
 
 It forecasts quarterly hotel occupancy by classification category and compares a transparent seasonal-naive benchmark against progressively richer models using hotel supply, Dubai airport passenger flows, and overnight visitor signals.
 
@@ -49,7 +49,7 @@ Current conclusion: the simple seasonal-naive benchmark remains the best validat
 
 ## Structure
 
-```
+```text
 data/
   processed/
     demandlens_master.csv
