@@ -6,7 +6,7 @@ DEFAULT_DATA_PATH = Path("data/processed/demandlens_master.csv")
 
 
 def load_master(path: str | Path = DEFAULT_DATA_PATH) -> pd.DataFrame:
-    """Load the prepared quarterly DemandLens master dataset."""
+    """Load the prepared quarterly StaySignal master dataset."""
     df = pd.read_csv(path)
     df["Year"] = pd.to_numeric(df["Year"], errors="raise").astype(int)
     df["Quarter_Number"] = pd.to_numeric(df["Quarter_Number"], errors="raise").astype(int)
